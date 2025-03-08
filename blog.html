@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentimate Blog - Design Insights & Stories</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="lib/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0B;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-heart {
+            color: #FF1554;
+        }
+
+        .blog-hero {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #FF1554;
+            color: #fff;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .card-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <span class="logo-heart">♥</span>
+            agentimate
+        </a>
+    </header>
+
+    <div class="animated-bg">
+        <!-- Background shapes will be added by JavaScript -->
+    </div>
+
+    <section class="blog-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Design Stories & Insights</h1>
+            <p class="hero-subtitle">Explore the latest trends, tips, and transformations in design</p>
+        </div>
+    </section>
+
+    <div class="blog-grid">
+        <article class="blog-card">
+            <div class="card-image" style="background-image: url('https://source.unsplash.com/random/800x600?design')"></div>
+            <div class="card-content">
+                <span class="card-tag">Design Trends</span>
+                <h2 class="card-title">The Future of AI-Powered Design: What's Next?</h2>
+                <p class="card-excerpt">Explore how artificial intelligence is revolutionizing the design industry and what it means for creators.</p>
+            </div>
+        </article>
+        <article class="blog-card">
+            <div class="card-image" style="background-image: url('https://source.unsplash.com/random/800x600?art')"></div>
+            <div class="card-content">
+                <span class="card-tag">Creativity</span>
+                <h2 class="card-title">Unlocking Creative Potential with Agentimate</h2>
+                <p class="card-excerpt">Learn how our AI assistant helps designers break through creative blocks and achieve more.</p>
+            </div>
+        </article>
+        <article class="blog-card">
+            <div class="card-image" style="background-image: url('https://source.unsplash.com/random/800x600?technology')"></div>
+            <div class="card-content">
+                <span class="card-tag">Innovation</span>
+                <h2 class="card-title">Bridging the Gap Between Imagination and Reality</h2>
+                <p class="card-excerpt">Discover how modern design tools are making it easier to bring your ideas to life.</p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create and animate background shapes
+            const bg = document.querySelector('.animated-bg');
+            const colors = ['#FF1554', '#FF4081', '#7C4DFF', '#18FF92'];
+            
+            for (let i = 0; i < 4; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('bg-shape');
+                shape.style.background = colors[i];
+                shape.style.width = Math.random() * 400 + 200 + 'px';
+                shape.style.height = shape.style.width;
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                bg.appendChild(shape);
+
+                anime({
+                    targets: shape,
+                    translateX: () => anime.random(-200, 200),
+                    translateY: () => anime.random(-200, 200),
+                    scale: () => [1, 1.5],
+                    rotate: () => [0, 360],
+                    duration: () => anime.random(15000, 25000),
+                    loop: true,
+                    direction: 'alternate',
+                    easing: 'easeInOutQuad'
+                });
+            }
+
+            // Animate hero content
+            anime.timeline({
+                easing: 'easeOutExpo'
+            })
+            .add({
+                targets: '.hero-title',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                duration: 1000,
+                delay: 300
+            })
+            .add({
+                targets: '.hero-subtitle',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 800,
+                offset: '-=600'
+            });
+
+            // Animate blog cards
+            anime({
+                targets: '.blog-card',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                duration: 800,
+                delay: anime.stagger(200, {start: 1000}),
+                easing: 'easeOutQuad'
+            });
+
+            // Add hover effect for blog cards
+            document.querySelectorAll('.blog-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    anime({
+                        targets: card.querySelector('.card-image'),
+                        scale: 1.1,
+                        duration: 500,
+                        easing: 'easeOutQuad'
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    anime({
+                        targets: card.querySelector('.card-image'),
+                        scale: 1,
+                        duration: 500,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime.js Examples</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        body {
+            background: #2B2B35;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .animation-box {
+            width: 100px;
+            height: 100px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="animation-box"></div>
+    <script>
+        anime({
+            targets: '.animation-box',
+            translateX: 250,
+            rotate: '1turn',
+            duration: 2000,
+            loop: true,
+            direction: 'alternate',
+            easing: 'easeInOutQuad'
+        });
+    </script>
+</body>
+</html> 

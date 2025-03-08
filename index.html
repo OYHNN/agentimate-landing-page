@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentimate - The agent who animates your ideas</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="lib/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A0B;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-heart {
+            color: #FF1554;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: #FF1554;
+            color: #fff;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .animated-heart {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .prompt-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .prompt-box input {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            width: 100%;
+            padding: 0.5rem;
+            outline: none;
+        }
+
+        .prompt-box button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .examples {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .example-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .example-tag:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .example-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .example-tag:hover:before {
+            left: 100%;
+        }
+
+        .animated-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <span class="logo-heart">♥</span>
+            agentimate
+        </a>
+        <nav class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#examples">Examples</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#docs">Docs</a>
+        </nav>
+        <div class="auth-buttons">
+            <a href="/login" class="btn btn-outline">Sign in</a>
+            <a href="/signup" class="btn btn-primary">Sign up</a>
+        </div>
+    </header>
+
+    <main class="hero">
+        <div class="animated-shapes">
+            <!-- Shapes will be added by JavaScript -->
+        </div>
+        <div class="hero-content">
+            <div class="animated-heart">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <path class="heart-path" fill="none" stroke="#FF1554" stroke-width="4"
+                        d="M50,30 C35,10 10,20 10,40 C10,60 25,70 50,90 C75,70 90,60 90,40 C90,20 65,10 50,30 Z" />
+                </svg>
+            </div>
+            <h1 class="title">Idea to design in seconds.</h1>
+            <p class="subtitle">Agentimate is your superhuman design assistant.</p>
+            <div class="prompt-box">
+                <input type="text" placeholder="Ask Agentimate to create a design for my...">
+                <button>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="examples">
+                <div class="example-tag">Brand identity</div>
+                <div class="example-tag">Website mockup</div>
+                <div class="example-tag">Social media kit</div>
+                <div class="example-tag">Logo design</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize animations when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create floating shapes
+            const shapes = [];
+            const shapesContainer = document.querySelector('.animated-shapes');
+            for (let i = 0; i < 20; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('shape');
+                shape.style.width = Math.random() * 100 + 20 + 'px';
+                shape.style.height = shape.style.width;
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                shape.style.background = `hsl(${Math.random() * 360}, 70%, 70%)`;
+                shapesContainer.appendChild(shape);
+                shapes.push(shape);
+            }
+
+            // Animate shapes
+            shapes.forEach(shape => {
+                anime({
+                    targets: shape,
+                    translateX: () => anime.random(-200, 200),
+                    translateY: () => anime.random(-200, 200),
+                    scale: () => anime.random(0.2, 1.5),
+                    easing: 'easeInOutQuad',
+                    duration: () => anime.random(3000, 5000),
+                    loop: true,
+                    direction: 'alternate'
+                });
+            });
+
+            // Animate heart
+            anime({
+                targets: '.heart-path',
+                strokeDashoffset: [anime.setDashoffset, 0],
+                easing: 'easeInOutSine',
+                duration: 1500,
+                delay: 300,
+                loop: true,
+                direction: 'alternate',
+                scale: [1, 1.1],
+            });
+
+            // Animate content
+            anime.timeline({
+                easing: 'easeOutExpo',
+            })
+            .add({
+                targets: '.title',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 1000,
+                delay: 500
+            })
+            .add({
+                targets: '.subtitle',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 1000,
+                offset: '-=800'
+            })
+            .add({
+                targets: '.prompt-box',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 1000,
+                offset: '-=800'
+            })
+            .add({
+                targets: '.examples',
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 1000,
+                offset: '-=800'
+            });
+
+            // Add animation for example tags
+            const tags = document.querySelectorAll('.example-tag');
+            tags.forEach((tag, index) => {
+                // Initial animation
+                anime({
+                    targets: tag,
+                    scale: [0.5, 1],
+                    opacity: [0, 1],
+                    delay: 1000 + (index * 100),
+                    duration: 800,
+                    easing: 'spring(1, 80, 10, 0)'
+                });
+
+                // Continuous subtle pulse animation
+                anime({
+                    targets: tag,
+                    scale: 1.02,
+                    direction: 'alternate',
+                    loop: true,
+                    duration: 1000 + (index * 200),
+                    easing: 'easeInOutSine'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
